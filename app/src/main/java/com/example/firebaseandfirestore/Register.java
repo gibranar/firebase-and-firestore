@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class Register extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private EditText usernameEditText, passwordEditText, confirmPasswordEditText;
+    private EditText emailEditText, passwordEditText, confirmPasswordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +32,16 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize UI components
-        usernameEditText = findViewById(R.id.etRegUsername);
+        emailEditText = findViewById(R.id.etRegEmail);
         passwordEditText = findViewById(R.id.etRegPassword);
         confirmPasswordEditText = findViewById(R.id.etRegConfirmPassword);
         Button registerButton = findViewById(R.id.btnRegister);
         Button loginButton = findViewById(R.id.btnGoToLogin);
 
-        // Register button action
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = usernameEditText.getText().toString();
+                String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String confirmPassword = confirmPasswordEditText.getText().toString();
 
@@ -56,7 +55,6 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        // Login button action
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,22 +69,16 @@ public class Register extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    FirebaseUser user = mAuth.getCurrentUser();
                     Toast.makeText(Register.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                    updateUI(user);
+                    mAuth.signOut();
+
+                    Intent intent = new Intent(Register.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(Register.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    updateUI(null);
                 }
             }
         });
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            Intent intent = new Intent(Register.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
     }
 }

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
-    private EditText usernameEditText, passwordEditText;
+    private EditText emailEditText, passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize UI components
-        usernameEditText = findViewById(R.id.etUsername);
+        emailEditText = findViewById(R.id.etEmail);
         passwordEditText = findViewById(R.id.etPassword);
         Button loginButton = findViewById(R.id.btnLogin);
         Button registerButton = findViewById(R.id.btnGoToRegister);
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = usernameEditText.getText().toString();
+                String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
                 // Check if email and password fields are filled
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-//            updateUI(currentUser);
+            updateUI(currentUser);
         }
     }
 
@@ -93,12 +93,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "signInWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
                     Toast.makeText(MainActivity.this, "Authentication success.", Toast.LENGTH_SHORT).show();
-//                            updateUI(user);
+                    updateUI(user);
                 } else {
-                    // If sign in fails, display a message to the user
+                    // Sign in failed
                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                     Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-//                    updateUI(null);
                 }
             }
         });
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(MainActivity.this, Register.class);
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
         } else {
