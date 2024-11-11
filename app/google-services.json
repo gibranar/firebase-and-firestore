@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77741047030",
+    "project_id": "mobile-auth-and-firestore",
+    "storage_bucket": "mobile-auth-and-firestore.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77741047030:android:58794e46f09c04d9f440d7",
+        "android_client_info": {
+          "package_name": "com.example.firebaseandfirestore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUL49B2RFJwvy0sVbhGwxmSp-pGgAI86c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Default State: Warna tombol ketika tidak ada interaksi -->
+    <item android:state_enabled="true">
+        <shape>
+            <solid android:color="#80FFFFFF"/> <!-- Putih dengan transparansi 50% -->
+            <corners android:radius="30dp"/> <!-- Membuat sudut membulat -->
+        </shape>
+    </item>
+
+    <!-- Tekanan State: Warna tombol saat ditekan -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#33FFFFFF"/> <!-- Putih dengan transparansi lebih tinggi saat ditekan -->
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+    <!-- Disabled State: Warna tombol saat tidak aktif -->
+    <item android:state_enabled="false">
+        <shape>
+            <solid android:color="#4DFFFFFF"/> <!-- Putih dengan transparansi lebih tinggi untuk tombol non-aktif -->
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+</selector>
