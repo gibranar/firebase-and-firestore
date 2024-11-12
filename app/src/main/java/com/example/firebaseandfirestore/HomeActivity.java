@@ -29,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView userEmail;
     private Button logoutButton;
+    private Button addTaskButton;
     private RecyclerView notesRecyclerView;
     private NotesAdapter notesAdapter;
     private List<Note> notesList = new ArrayList<>();
@@ -47,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.userEmail);
         logoutButton = findViewById(R.id.logoutButton);
         notesRecyclerView = findViewById(R.id.notesRecyclerView);
+        addTaskButton = findViewById(R.id.addTaskButton);
 
         // Set up RecyclerView
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -76,6 +78,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AddNoteActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         // Fetch notes from Firestore
         fetchNotes();
     }
@@ -98,4 +109,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
