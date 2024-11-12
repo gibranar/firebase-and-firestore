@@ -2,10 +2,10 @@ package com.example.firebaseandfirestore;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +25,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private EditText noteTitle;
     private EditText noteContent;
     private Button saveButton;
+    private ImageButton backButton;
     private FirebaseAuth mAuth;
 
     @Override
@@ -41,14 +42,24 @@ public class AddNoteActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();  // Kembali ke aktivitas sebelumnya
+            }
+        });
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveButton.setEnabled(false);
+
                 Map<String, Object> note = new HashMap<>();
                 note.put("title", noteTitle.getText().toString());
                 note.put("text", noteContent.getText().toString());
+                note.put("user_email", currentUser.getEmail());
 
-// Add a new document with a generated ID
                 db.collection("notes").add(note).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -61,13 +72,10 @@ public class AddNoteActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(AddNoteActivity.this, "Failed adding note", Toast.LENGTH_SHORT).show();
+                        saveButton.setEnabled(true);
                     }
                 });
-
             }
         });
-
     }
-
-
 }

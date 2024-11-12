@@ -30,6 +30,9 @@
         <activity android:name=".AddNoteActivity"
             android:exported="false">
         </activity>
+        <activity android:name=".DetailsNoteActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

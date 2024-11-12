@@ -41,10 +41,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_list);
 
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // Get references to UI elements
         userEmail = findViewById(R.id.userEmail);
         logoutButton = findViewById(R.id.logoutButton);
         notesRecyclerView = findViewById(R.id.notesRecyclerView);
@@ -52,19 +50,17 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set up RecyclerView
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        notesAdapter = new NotesAdapter(notesList);
+        notesAdapter = new NotesAdapter(notesList, this);
         notesRecyclerView.setAdapter(notesAdapter);
 
-        // Get current user and set email to TextView
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String email = currentUser.getEmail();
-            userEmail.setText(email);
+            userEmail.setText("Welcome Back! \n" + email);
         } else {
             Toast.makeText(this, "No user is logged in", Toast.LENGTH_SHORT).show();
         }
 
-        // Set up logout button
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,28 +83,33 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // Fetch notes from Firestore
         fetchNotes();
     }
 
     private void fetchNotes() {
-        notesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@NonNull QuerySnapshot querySnapshot, FirebaseFirestoreException e) {
-                if (e != null) {
-                    Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String email = currentUser.getEmail();
 
-                notesList.clear();
-                for (QueryDocumentSnapshot document : querySnapshot) {
-                    Note note = document.toObject(Note.class);
-                    notesList.add(note);
+            notesRef.whereEqualTo("user_email", email).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@NonNull QuerySnapshot querySnapshot, FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    notesList.clear();
+                    for (QueryDocumentSnapshot document : querySnapshot) {
+                        Note note = document.toObject(Note.class);
+                        note.setId(document.getId()); // Menyimpan ID dari Firestore
+                        notesList.add(note);
+                    }
+                    notesAdapter.notifyDataSetChanged();
                 }
-                notesAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+        } else {
+            Toast.makeText(this, "No user is logged in", Toast.LENGTH_SHORT).show();
+        }
     }
-
-
 }
