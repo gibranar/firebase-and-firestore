@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +29,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private TextView userEmail;
-    private Button logoutButton;
     private Button addTaskButton;
+    private ImageButton profileSettingsButton;
     private RecyclerView notesRecyclerView;
     private NotesAdapter notesAdapter;
     private List<Note> notesList = new ArrayList<>();
@@ -44,9 +45,9 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         userEmail = findViewById(R.id.userEmail);
-        logoutButton = findViewById(R.id.logoutButton);
         notesRecyclerView = findViewById(R.id.notesRecyclerView);
         addTaskButton = findViewById(R.id.addTaskButton);
+        profileSettingsButton = findViewById(R.id.profileSettingsButton);
 
         // Set up RecyclerView
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -61,23 +62,19 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, "No user is logged in", Toast.LENGTH_SHORT).show();
         }
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                Toast.makeText(HomeActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(HomeActivity.this, AddNoteActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
+        profileSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, AddNoteActivity.class);
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 finish();
             }

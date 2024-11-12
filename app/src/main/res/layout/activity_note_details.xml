@@ -10,49 +10,47 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="?attr/homeAsUpIndicator"
-        android:background="?attr/selectableItemBackgroundBorderless"/>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="?attr/homeAsUpIndicator" />
 
     <EditText
         android:id="@+id/noteTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:hint="Title"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/noteContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:hint="@string/note_placeholder"
-        android:gravity="top|start"
         android:background="@android:color/white"
+        android:gravity="top|start"
+        android:hint="@string/note_placeholder"
         android:inputType="textMultiLine"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Delete"
-            android:backgroundTint="@android:color/holo_red_light"
-            android:textColor="@android:color/white"/>
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/saveButton"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Save"
-            android:backgroundTint="@android:color/holo_blue_light"
-            android:textColor="@android:color/white"/>
+            android:text="Edit"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:text="Delete"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>
