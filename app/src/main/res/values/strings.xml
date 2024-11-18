@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FirebaseAndFirestore</string>
+    <string name="notes_title">Notes</string>
+    <string name="note_placeholder">Enter your note here...</string>
+    <string name="add_note_button">Add Note</string>
+    <string name="note_title">Note Title</string>
+    <string name="note_date">Created on</string>
+    <string name="view_details">View Details</string>
+    <string name="edit_note">Edit</string>
+    <string name="delete_note">Delete</string>
+    <string name="confirm_delete">Are you sure you want to delete this note?</string>
+    <string name="username">Nama</string>
+    <string name="note_image_description">liburan di pantai....</string>
+
+</resources>
